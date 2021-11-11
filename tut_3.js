@@ -4,6 +4,7 @@
 function manipulatingIllustratorObjectsTutorial()
 {
 	#include "/Volumes/Customization/Library/Scripts/Script_Resources/Data/Utilities_Container.jsxbin";
+	#include "/Volumes/Customization/Library/Scripts/Script_Resources/Data/Batch_Framework.jsxbin";
 
 	if(app.documents.length < 1)
 	{
@@ -28,10 +29,10 @@ function manipulatingIllustratorObjectsTutorial()
     function fabricText()
     {
         informationLayer.locked = false;
-        textFrame = doc.textFrames.add();
+        textFrame = informationLayer.textFrames.add();
         textFrame.textRange.characterAttributes.size = 14;
         textFrame.position = new Point(475, -733);
-        textFrame.move(informationLayer, ElementPlacement.PLACEATBEGINNING);
+        //textFrame.move(informationLayer, ElementPlacement.PLACEATBEGINNING);
         textFrame.name = "Fabric Style";
         informationLayer.locked = true;
     }
