@@ -25,16 +25,21 @@ function manipulatingIllustratorObjectsTutorial()
     var mockupLayer = findSpecificLayer(garmentLayer, "Mockup");   
 
     var textFrame;
+var find, count;
 
-    function contentSwap()
+    function fabricText()
     {
         informationLayer.locked = false;
-        mockupLayer.textFrames[1].contents = "COLOR";
-        mockupLayer.textFrames[1].name = "Button Color";
-        mockupLayer.textFrames[1].move(informationLayer, ElementPlacement.PLACEATBEGINNING);
+        find = "COLOR";
+        count = mockupLayer.textFrames.length
+        for (i=count-1; i>0; i--)
+        { if (mockupLayer.textFrames[i].contents.match (find) == find)
+              { mockupLayer.textFrames[i].move(informationLayer, ElementPlacement.PLACEATBEGINNING);
+                } informationLayer.textFrames[0].name = "Button Color";
+        }
         informationLayer.locked = true;
     }
-    contentSwap();
+    fabricText();
 
     return undefined;
 }
