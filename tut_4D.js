@@ -32,7 +32,7 @@ function manipulatingIllustratorObjectsTutorial()
         informationLayer.locked = false;
         find = "COLOR";
         count = mockupLayer.textFrames.length
-        for (i =count - 1; i>0; i--)
+        for (i =count - 1; i>=0; i--)
         { if(mockupLayer.textFrames[i].contents == find)
               { mockupLayer.textFrames[i].move(informationLayer, ElementPlacement.PLACEATBEGINNING);
                 } informationLayer.textFrames[0].name = "Button Color";
