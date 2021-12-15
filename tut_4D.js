@@ -1,85 +1,73 @@
 #target Illustrator
 
-function manipulatingIllustratorObjectsTutorial()
+function manipulatingIllustratorObjectsTutorial4()
 {
-    #include "/Volumes/Customization/Library/Scripts/Script_Resources/Data/Utilities_Container.jsxbin";
+	#include "/Volumes/Customization/Library/Scripts/Script_Resources/Data/Utilities_Container.jsxbin";
     #include "/Volumes/Customization/Library/Scripts/Script_Resources/Data/Batch_Framework.jsxbin";
 
+	/*
+    if(app.documents.length < 1)
+	{
+		//there are no open documents..
+		//alert the user and exist script
+		alert("Please open a document and try again");
+		return;
+	}
+    */
+    batchInit(containerFunction,"readme text.. this is optional")
 
-    //we can remove this conditional for batching orders
-    //most times you'll run the script with no documents open
-    //and choose a folder to batch.
-    if (app.documents.length < 1)
+    function containerFunction()
     {
-        //there are no open documents..
-        //alert the user and exist script
-        alert("Please open a document and try again");
-        return;
-    }
+
+	    var doc = app.activeDocument; //whichever document is open at the moment
+	
+	    var layers = doc.layers;
+	    var swatches = doc.swatches;
+	    var artboards = doc.artboards;
+        var fname = activeDocument.name;
+
+        var garmentLayer = layers[0];
+        var backLayer = doc.layers.getByName("BKGRD, do not unlock");
 
 
-    //everything from here down should be packaged up in a container function
-    //so that you can execute all of this logic on each file.
-    //after you package it up, you'll call that container function from
-    //within the batchInit() function, like so:
-    //batchInit(myContainerFunction,"readme text.. this is optional");
+        var informationLayer = findSpecificLayer(garmentLayer, "Information");
+        var mockupLayer = findSpecificLayer(garmentLayer, "Mockup");   
+        //var backLayer = findSpecificLayer(app.activeDocument.layers.index[2]);
+        var textFrame;
+        var find1, find2, find3, initialSearch, searchRelocated;
 
-    //note that when passing a function to another function like this, we don't use
-    //the parentheses that we'd normally use to call the function. That's because
-    //we don't actually want to call the function yet. We want to pass the reference
-    //to the function as the argument. If we call the function
-    //within the argument list, like this:
-    //batchInit(myContainerFunction(),"readme text.. this is optional");
-    //then it will execute myContainerFunction, and then pass in the return value
-    //of that function as the first argument to the batchInit function.
-    //This is not what we want. We want to pass the function itself, so that it can
-    //be executed from inside the batchInit function. That's how we'll get it to run
-    //on each necessary file.
-
-
-    var doc = app.activeDocument; //whichever document is open at the moment
-
-    var layers = doc.layers;
-    var swatches = doc.swatches;
-    var artboards = doc.artboards;
-    var fname = activeDocument.name;
-
-    var garmentLayer = layers[0];
-
-    var informationLayer = findSpecificLayer(garmentLayer, "Information");
-    var mockupLayer = findSpecificLayer(garmentLayer, "Mockup");
-
-    var textFrame;
-    var find, count, recount;
-
-    function findText()
-    {
-        informationLayer.locked = false;
-        find = "COLOR";
-        count = mockupLayer.textFrames.length
-        recount = informationLayer.textFrames.length
-        for (i = count - 1; i >= 0; i--)
-        {
-            if (mockupLayer.textFrames[i].contents == find)
-            {
-                mockupLayer.textFrames[i].move(informationLayer, ElementPlacement.PLACEATBEGINNING);
-            }
+        function findText()
+        { 
+            backLayer.locked = false;
+            informationLayer.locked = false;
+            find1 = "Fill Color";
+            find2 = "Inside Stroke Color";
+            find3 = "Outside Stroke Color";
+            initialSearch = backLayer.textFrames.length
+            searchRelocated = informationLayer.textFrames.length
+            for (i =initialSearch - 1; i>=0; i--)
+                {if(backLayer.textFrames[i].name == find1, find2, find3)
+                    {backLayer.textFrames[i].move(informationLayer, ElementPlacement.PLACEATBEGINNING);}
+                }
+            /*for (i =searchRelocated - 1; i>=0; i--)
+                {if(informationLayer.textFrames[i].name == find)
+                    {informationLayer.textFrames[i].name = "Snap Color";}
+                }*/
+            informationLayer.locked = true;
+            backLayer.locked = true;
         }
-        for (i = recount - 1; i >= 0; i--)
-        {
-            if (informationLayer.textFrames[i].contents == find)
-            {
-                informationLayer.textFrames[i].name = "Button Color";
-            }
-        }
-        informationLayer.locked = true;
+        findText();
+
+        return undefined;
+        
+        batchInit() 
     }
-    findText();
+    containerFunction();
+       
+    
 
-    //everything above this (up to the other comment) should be
-    //inside your container function
-    //then you can call the batchInit() function just below this
 
-    return undefined;
+   
+
 }
-manipulatingIllustratorObjectsTutorial();
+manipulatingIllustratorObjectsTutorial4();
